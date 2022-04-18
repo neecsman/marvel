@@ -11,7 +11,7 @@ const CharList = (props) => {
 
     const [charList, setCharList] = useState([]);
     const [newItemLoading, setNewItemLoading] = useState(false);
-    const [offset, setOffset] = useState(210);
+    const [offset, setOffset] = useState(190);
     const [charEnded, setCharEnded] = useState(false);
 
     const {loading, error, getAllCharacters} = useMarvelService();
@@ -33,10 +33,10 @@ const CharList = (props) => {
             ended = true;
         }
 
-       setCharList(charList => [...charList, ...newCharList]);
-       setNewItemLoading(newItemLoading => false);
-       setOffset(offset => offset + 9);
-       setCharEnded(charEnded => ended);
+       setCharList([...charList, ...newCharList]);
+       setNewItemLoading(false);
+       setOffset(offset + 9);
+       setCharEnded(ended);
    }
 
 
@@ -64,6 +64,7 @@ const CharList = (props) => {
                     onClick={() => {
                         props.onCharSelected(item.id);
                         focusOnItem(i);
+                        
                     }}
                     onKeyPress={(e) => {
                         if (e.key === ' ' || e.key === "Enter") {

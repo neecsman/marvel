@@ -23,19 +23,20 @@ const ComicsList = (props) => {
         initial ? setNewItemLoading(false) : setNewItemLoading(true)
             getAllComics(offset)
                 .then(onComicsListLoaded);
+                
     }
 
 
     const onComicsListLoaded = (newComicsList) => {
-    let ended = false;
+        let ended = false;
         if(newComicsList.length < 8) {
             ended = true;
         }
 
-       setComicsList(comicsList => [...comicsList, ...newComicsList]);
-       setNewItemLoading(newItemLoading => false);
-       setOffset(offset => offset + 8);
-       setComicsEnded(comicsEnded => ended);
+       setComicsList([...comicsList, ...newComicsList]);
+       setNewItemLoading(false);
+       setOffset(offset + 8);
+       setComicsEnded(ended);
     }
 
     function renderItems(arr) {
