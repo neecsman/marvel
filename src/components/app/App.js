@@ -1,33 +1,29 @@
-// import { useState } from "react";
+import { lazy, Suspense } from "react";
 import { Routes, Route  } from "react-router-dom";
 
 import AppHeader from "../appHeader/AppHeader";
-import { MainPages, ComicsPage } from "../pages";
+import Spinner from "../spinner/Spinner";
 
-//import SingleComic from "../singleComic/SingleComic";
-
+const Page404 = lazy(() => import('../pages/404'));
+const MainPages = lazy(() => import('../pages/MainPage'));
+const ComicsPage = lazy(() => import('../pages/ComicsPage'));
+const SingleComicPage = lazy(() => import('../pages/SingleComicPage'));
 
 
 const App = () => {
-
-    // const [selectedComics, setSelectedComics] = useState(null);
-
-    // const onComicsSelected = (id) => {
-    //     setSelectedComics(id);
-    // }
 
     return (
         <div className="app">
             <AppHeader/>
             <main>
+             <Suspense fallback={<Spinner/>}>
                 <Routes>
                     <Route path="/" element={<MainPages/>}/>
                     <Route path="/comics" element={<ComicsPage/>}/>
+                    <Route path={`/comics/:comicId`} element={<SingleComicPage/>}/>
+                    <Route path="*" element={<Page404/>}/>                   
                 </Routes>
-
-                {/* <ErrorBoundary>
-                    <SingleComic comicsId={selectedComics}/>
-                </ErrorBoundary> */}
+             </Suspense>
             </main>
         </div>
     )
